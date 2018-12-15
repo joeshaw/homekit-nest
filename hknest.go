@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/brutella/hc"
 	"github.com/brutella/hc/accessory"
 	"github.com/brutella/hc/characteristic"
-	"github.com/brutella/log"
 
 	"github.com/ablyler/nest"
 )
@@ -151,7 +151,6 @@ func main() {
 	nestPinArg := flag.String("nest-pin", "", "PIN generated from the Nest site")
 	nestTokenArg := flag.String("nest-token", "", "Authorization token from nest auth.")
 	homekitPinArg := flag.String("homekit-pin", "", "PIN you create to be used to pair Nest with HomeKit")
-	verboseArg := flag.Bool("v", false, "Whether or not log output is displayed")
 	storagePathArg := flag.String("storage-path", "", "Path to store accessory information")
 
 	flag.Parse()
@@ -163,11 +162,6 @@ func main() {
 	nestToken = *nestTokenArg
 	homekitPin = *homekitPinArg
 	storagePath = *storagePathArg
-
-	if !*verboseArg {
-		log.Info = false
-		log.Verbose = false
-	}
 
 	hc.OnTermination(func() {
 		os.Exit(1)
